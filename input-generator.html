@@ -63,10 +63,6 @@
           configuration: {
             type: Object,
             value: { label: "Default input", name : "default", type : "text", pattern : "", error_message : "" }
-          },
-          value : {
-            type : String,
-            value : ""
           }
         };
       }
@@ -116,7 +112,10 @@
         let actualElement = this.shadowRoot.querySelector('#actual');
         let configuration = this.configuration;
         let type = configuration.type;
-        let infoComponent = {} ;
+        let infoComponent = {};
+        if (!actualElement) {
+          return infoComponent;
+        }
         infoComponent.name = configuration.name;
         switch (type) {
           case "checkbox" :
