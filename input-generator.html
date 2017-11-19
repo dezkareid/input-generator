@@ -1,0 +1,129 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-input/paper-textarea.html">
+<link rel="import" href="../paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
+
+<dom-module id="input-generator">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    {{ value }}
+    <template is="dom-if" if="{{ _typeElement(configuration.type,'paper-input')}}">
+      <paper-input id="actual" label="{{ configuration.label }}" type="{{ configuration.type }}" auto-validate pattern="{{ configuration.pattern }}" error-message="{{ configuration.error}} "></paper-input>
+    </template>
+    <template is="dom-if" if="{{ _typeElement(configuration.type, 'paper-textarea')}}">
+      <paper-textarea id="actual" label="{{ configuration.label }}" pattern="{{ configuration.pattern }}"></paper-textarea>
+    </template>
+    <template is="dom-if" if="{{ _typeElement(configuration.type, 'paper-checkbox')}}">
+      <paper-checkbox id="actual" pattern="{{ configuration.pattern }}">{{ configuration.label }}</paper-checkbox>
+    </template>
+    <template is="dom-if" if="{{ _typeElement(configuration.type, 'paper-listbox')}}">
+      <paper-listbox id="actual" label="configuration.label">
+        <template is="dom-repeat" items="{{ configuration.options }}">
+          <paper-item>{{ item.name }}</paper-item>
+        </template>
+      </paper-listbox>
+    </template>
+    <template is="dom-if" if="{{ _typeElement(configuration.type, 'paper-dropdown-menu')}}">
+      <paper-dropdown-menu id="actual" label="{{configuration.label}}">
+        <paper-listbox slot="dropdown-content" class="dropdown-content">
+          <template is="dom-repeat" items="{{ configuration.options }}">
+            <paper-item>{{ item.name }}</paper-item>
+          </template>
+        </paper-listbox>
+      </paper-dropdown-menu>
+    </template>
+  </template>
+
+  <script>
+    /**
+     * `input-generator`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class InputGenerator extends Polymer.Element {
+
+      static get is() { return 'input-generator'; }
+      static get properties() {
+        return {
+          configuration: {
+            type: Object,
+            value: { type : "text", pattern : "", error_message : "", }
+          },
+          value : {
+            type : String,
+            value : ""
+          }
+        };
+      }
+      
+      _typeElement(type, expectedType) {
+        let typeElement = "paper-input";
+        switch (type) {
+          case "textarea" :
+            typeElement = "paper-textarea";
+            break;
+          case "checkbox" :
+            typeElement = "paper-checkbox";
+            break;
+          case "listbox" :
+            typeElement = "paper-listbox";
+            break;
+          case "dropdown" :
+            typeElement = "paper-dropdown-menu";
+            break;
+        }
+        return typeElement === expectedType;
+      }
+
+      _assignAttributes() {
+        if (this.configuration && this.configuration.attributes) {
+          let attributes = this.configuration.attributes
+          let actualElement = this.shadowRoot.querySelector('#actual');
+          for (let key in attributes) {
+            actualElement[key] = attributes[key];
+          }
+        }
+      }
+
+      ready() {
+        super.ready();
+        Polymer.RenderStatus.afterNextRender(this, this._assignAttributes, this.configuration.attributes);
+      }
+
+      getValue() {
+        let actualElement = this.shadowRoot.querySelector('#actual');
+        let type = this.configuration.type;
+        let infoComponent = {} ;
+        infoComponent.name = this.configuration.label
+        switch (type) {
+          case "checkbox" :
+            infoComponent.value = actualElement.checked;
+            break;
+          case "listbox" :
+            infoComponent.value = actualElement.selected;
+            break;
+          case "dropdown" :
+            infoComponent.value = actualElement.value;
+            break;
+          default :
+            infoComponent.value = actualElement.value;
+        }
+
+        return infoComponent;
+      }
+
+    }
+
+    window.customElements.define(InputGenerator.is, InputGenerator);
+  </script>
+</dom-module>
