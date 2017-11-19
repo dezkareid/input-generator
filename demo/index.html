@@ -22,10 +22,10 @@
       <h3>Basic input-generator demo</h3>
       <demo-snippet>
         <template>
-          <input-generator configuration='{ "label" : "Nombre", "pattern" : "[a-zA-Z]*", "error" : "El nombre tiene caracteres desconocidos", "type" : "text" }'></input-generator>
-          <input-generator configuration='{ "label" : "Numero", "error" : "El nombre tiene caracteres desconocidos", "type" : "number" }'></input-generator>
-          <input-generator configuration='{ "label" : "Pokemons", "type" : "dropdown", "options" : [{ "name" : "Totodile" }, { "name" : "Pikachu" }] }'></input-generator>
-          <input-generator configuration='{ "label" : "Checkbox", "type" : "checkbox" }'></input-generator>
+          <input-generator configuration='{ "label" : "Name", "name" : "name", "pattern" : "[a-zA-Z]*", "error" : "El nombre tiene caracteres desconocidos", "type" : "text" }'></input-generator>
+          <input-generator configuration='{ "label" : "Number", "name" : "name", "error" : "El nombre tiene caracteres desconocidos", "type" : "number" }'></input-generator>
+          <input-generator configuration='{ "label" : "Pokemons", "type" : "dropdown", "name" : "pokemons", "options" : [{ "name" : "Totodile" }, { "name" : "Pikachu" }] }'></input-generator>
+          <input-generator configuration='{ "label" : "Checkbox", "name" : "checkbox", "type" : "checkbox" }'></input-generator>
         </template>
       </demo-snippet>
     </div>

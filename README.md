@@ -1,21 +1,9 @@
 # \<input-generator\>
 
+`<input-generator>` creates paper-input, paper-checkbox, paper-listbox and paper-dropdown-menu based in a json object.
 
+## Usage
+You just need add in anywhere you need and set object when the correct syntax
 
-## Install the Polymer-CLI
-
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your element locally.
-
-## Viewing Your Element
-
+```html<input-generator configuration='{ "label" : "label-title", "name": "nameInput", pattern" : "regex", "error" : "error-message", "type" : "text", "attributes" : [{ "disabled" : true }] }'></input-generator>
 ```
-$ polymer serve
-```
-
-## Running Tests
-
-```
-$ polymer test
-```
-
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.

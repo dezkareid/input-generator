@@ -43,8 +43,12 @@
 
   <script>
     /**
-     * `input-generator`
+     * # Input Generator
+     * `<input-generator>` creates paper-input, paper-checkbox, paper-listbox and paper-dropdown-menu based in a json object.
      * 
+     * ## Usage
+     * You just need add in anywhere you need and set object when the correct syntax
+     * <input-generator configuration='{ "label" : "label-title", "name": "nameInput", pattern" : "regex", "error" : "error-message", "type" : "text", "attributes" : [{ "disabled" : true }] }'></input-generator>
      *
      * @customElement
      * @polymer
@@ -55,6 +59,7 @@
       static get is() { return 'input-generator'; }
       static get properties() {
         return {
+          /** Object to configure the input */
           configuration: {
             type: Object,
             value: { label: "Default input", name : "default", type : "text", pattern : "", error_message : "" }
@@ -66,6 +71,7 @@
         };
       }
       
+      /** Define if the input's type is the same for the component's template */
       _typeElement(type, expectedType) {
         let typeElement = "paper-input";
         switch (type) {
@@ -85,6 +91,7 @@
         return typeElement === expectedType;
       }
 
+      /** Set attributes from configuration.attributes object */
       _assignAttributes() {
         if (this.configuration && this.configuration.attributes) {
           let attributes = this.configuration.attributes
@@ -100,6 +107,11 @@
         Polymer.RenderStatus.afterNextRender(this, this._assignAttributes, this.configuration.attributes);
       }
 
+      /**
+       * Retrieve data about the input.
+       *
+       * @return {Object} with name, value and hasError.
+       */
       getValue() {
         let actualElement = this.shadowRoot.querySelector('#actual');
         let configuration = this.configuration;
