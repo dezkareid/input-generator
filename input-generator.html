@@ -15,7 +15,7 @@
     </style>
     {{ value }}
     <template is="dom-if" if="{{ _typeElement(configuration.type,'paper-input')}}">
-      <paper-input id="actual" label="{{ configuration.label }}" type="{{ configuration.type }}" auto-validate pattern="{{ configuration.pattern }}" error-message="{{ configuration.error}} "></paper-input>
+      <paper-input id="actual" label="{{ configuration.label }}" type="{{ configuration.type }}" auto-validate pattern="{{ configuration.pattern }}" error-message="{{ configuration.error }}"></paper-input>
     </template>
     <template is="dom-if" if="{{ _typeElement(configuration.type, 'paper-textarea')}}">
       <paper-textarea id="actual" label="{{ configuration.label }}" pattern="{{ configuration.pattern }}"></paper-textarea>
@@ -31,7 +31,7 @@
       </paper-listbox>
     </template>
     <template is="dom-if" if="{{ _typeElement(configuration.type, 'paper-dropdown-menu')}}">
-      <paper-dropdown-menu id="actual" label="{{configuration.label}}">
+      <paper-dropdown-menu id="actual" label="{{configuration.label}}" error-message="{{ configuration.error }}" >
         <paper-listbox slot="dropdown-content" class="dropdown-content">
           <template is="dom-repeat" items="{{ configuration.options }}">
             <paper-item>{{ item.name }}</paper-item>
@@ -111,15 +111,15 @@
             infoComponent.value = actualElement.checked;
             break;
           case "listbox" :
-            infoComponent.value = actualElement.selected;
+            infoComponent.value = actualElement.selectedItems;
             break;
           case "dropdown" :
-            infoComponent.value = actualElement.value;
+            infoComponent.value = actualElement.value;  
             break;
           default :
             infoComponent.value = actualElement.value;
         }
-
+        infoComponent.hasError = actualElement.invalid;
         return infoComponent;
       }
 
