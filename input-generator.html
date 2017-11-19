@@ -102,9 +102,10 @@
 
       getValue() {
         let actualElement = this.shadowRoot.querySelector('#actual');
-        let type = this.configuration.type;
+        let configuration = this.configuration;
+        let type = configuration.type;
         let infoComponent = {} ;
-        infoComponent.name = this.configuration.label
+        infoComponent.name = configuration.label.toLowerCase();
         switch (type) {
           case "checkbox" :
             infoComponent.value = actualElement.checked;
